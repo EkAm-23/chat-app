@@ -28,35 +28,18 @@ A 1:1 real-time chat application built with:
 
 ### Prerequisites
 - Docker & Docker Compose
-- JDK 17 (only for local development, not needed for Docker)
 
 ### Build
 
 ```bash
 # Build Docker images for server and client
-docker compose 
+docker compose build
 
 build
 
 # Or build them individually
 docker compose build server
 docker compose build client
-```
-
-To build locally with Gradle (without Docker):
-
-```bash
-# Build all modules (proto → server → client)
-./gradlew build -x test
-
-# Build only proto stubs
-./gradlew :proto:build
-
-# Build server bootJar
-./gradlew :server:bootJar
-
-# Build client distribution (bin/ + lib/)
-./gradlew :client:installDist
 ```
 
 ### Run
@@ -92,16 +75,5 @@ chat-app/
 ├── docker-compose.yml
 └── build.gradle.kts
 ```
-
-## Development
-
-```bash
-# Build all modules locally (requires JDK 17)
-./gradlew build
-
-# Run server locally (requires PostgreSQL on localhost:5432)
-./gradlew :server:bootRun
-
-# Run client locally
 ./gradlew :client:run --console=plain
 ```
