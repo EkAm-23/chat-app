@@ -1,8 +1,18 @@
 # Chat App
 
-# Build and Run Instructions
+## Features
 
-**.gitignore, IDE files, and build artifacts are excluded.**
+- 🔐 User registration with duplicate detection
+- 💬 Real-time 1:1 messaging via gRPC server-streaming
+- 🟢 Live online/offline status indicators
+- 📦 Offline message queuing & delivery on reconnect
+- 📜 Message history loading
+- 📋 Recent conversations list
+
+## Demo
+https://github.com/user-attachments/assets/8af366d9-e162-424a-af68-809cc6baaa23
+
+# Build and Run Instructions
 
 ## Chat App — gRPC Real-Time Messaging
 
@@ -24,7 +34,9 @@ A 1:1 real-time chat application built with:
 
 ```bash
 # Build Docker images for server and client
-docker compose build
+docker compose 
+
+build
 
 # Or build them individually
 docker compose build server
@@ -79,27 +91,6 @@ chat-app/
 ├── client/         # Standalone Kotlin console client
 ├── docker-compose.yml
 └── build.gradle.kts
-```
-
-## Features
-
-- 🔐 User registration with duplicate detection
-- 💬 Real-time 1:1 messaging via gRPC server-streaming
-- 🟢 Live online/offline status indicators
-- 📦 Offline message queuing & delivery on reconnect
-- 📜 Message history loading
-- 📋 Recent conversations list
-
-## Architecture
-
-```
-Client ──gRPC──> Server ──JPA──> PostgreSQL
-                   │
-                   ├── Register (unary)
-                   ├── SendMessage (unary)
-                   ├── Subscribe (server-streaming)
-                   ├── GetRecentChats (unary)
-                   └── GetMessageHistory (unary)
 ```
 
 ## Development
