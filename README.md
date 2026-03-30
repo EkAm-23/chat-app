@@ -75,5 +75,4 @@ chat-app/
 ├── docker-compose.yml
 └── build.gradle.kts
 ```
-./gradlew :client:run --console=plain
-```
+
