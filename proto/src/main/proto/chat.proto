@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package chatapp;
+
+option java_multiple_files = true;
+option java_package = "com.chatapp.proto";
+option java_outer_classname = "ChatProto";
+
+// ─── Service Definition ──────────────────────────────────────────
+
+service ChatService {
+  // Register or login a user (unary)
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // Send a message to another user (unary)
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+
+  // Subscribe to real-time events: incoming messages + status changes (server-streaming)
+  rpc Subscribe(SubscribeRequest) returns (stream StreamEvent);
+
+  // Get recent conversations for the main menu (unary)
+  rpc GetRecentChats(GetRecentChatsRequest) returns (GetRecentChatsResponse);
+
+  // Get message history for a specific conversation (unary)
+  rpc GetMessageHistory(GetMessageHistoryRequest) returns (GetMessageHistoryResponse);
+}
+
+// ─── Register / Login ────────────────────────────────────────────
+
+message RegisterRequest {
+  string username = 1;
+}
+
+message RegisterResponse {
+  string user_id = 1;
+  string username = 2;
+}
+
+// ─── Send Message ────────────────────────────────────────────────
+
+message SendMessageRequest {
+  string sender_username = 1;
+  string recipient_username = 2;
+  string content = 3;
+}
+
+message SendMessageResponse {
+  string message_id = 1;
+  int64 sent_at = 2;
+  bool recipient_online = 3;
+}
+
+// ─── Subscribe (Server-Streaming) ────────────────────────────────
+
+message SubscribeRequest {
+  string username = 1;
+}
+
+// A single stream event that carries either a message or a status change
+message StreamEvent {
+  oneof event {
+    IncomingMessage message = 1;
+    StatusChange status_change = 2;
+  }
+}
+
+message IncomingMessage {
+  string message_id = 1;
+  string sender_username = 2;
+  string content = 3;
+  int64 sent_at = 4;
+}
+
+message StatusChange {
+  string username = 1;
+  bool is_online = 2;
+}
+
+// ─── Recent Chats ────────────────────────────────────────────────
+
+message GetRecentChatsRequest {
+  string username = 1;
+}
+
+message GetRecentChatsResponse {
+  repeated RecentChat chats = 1;
+}
+
+message RecentChat {
+  string username = 1;
+  string last_message = 2;
+  int64 last_message_at = 3;
+  bool is_online = 4;
+}
+
+// ─── Message History ─────────────────────────────────────────────
+
+message GetMessageHistoryRequest {
+  string username = 1;
+  string other_username = 2;
+  int32 limit = 3; // Last N messages, default 50
+}
+
+message GetMessageHistoryResponse {
+  repeated ChatMessage messages = 1;
+}
+
+message ChatMessage {
+  string message_id = 1;
+  string sender_username = 2;
+  string recipient_username = 3;
+  string content = 4;
+  int64 sent_at = 5;
+}

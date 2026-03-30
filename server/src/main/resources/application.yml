@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: chat-server
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/chatapp}
+    username: ${SPRING_DATASOURCE_USERNAME:chatapp}
+    password: ${SPRING_DATASOURCE_PASSWORD:chatapp}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+grpc:
+  server:
+    port: 9090
+    enable-reflection: true
+
+logging:
+  level:
+    com.chatapp: INFO
+    net.devh.boot.grpc: INFO

@@ -1,0 +1,38 @@
+# Gradle build artifacts
+.gradle/
+build/
+proto/build/
+server/build/
+client/build/
+
+# Gradle wrapper jar is needed, but not the distribution cache
+.gradle/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker (prevent recursive context)
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+*.md
+
+# Local environment
+.env
+.env.*
